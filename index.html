@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>El viaje de las estrellas — Libro de cuentos</title>
+<meta name="description" content="El viaje de las estrellas — Escuela Los Lirios">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="intro" class="intro">
+  <div class="scene-image"></div>
+  <div class="scene-vignette"></div>
+  <div class="magic-dust"></div>
+  <div class="intro-cover">
+    <div class="intro-star">★</div>
+    <h1 class="intro-title">El viaje<br>de las estrellas</h1>
+    <p class="intro-subtitle">Una narración para celebrar nuestras voces, aprendizajes y caminos</p>
+    <div class="intro-school">Escuela Los Lirios</div>
+    <button id="start" class="start" type="button">Abrir el libro</button>
+  </div>
+</div>
+
+<div id="reader" class="reader" aria-hidden="true">
+  <div class="reader-bg"></div>
+  <div class="reader-light"></div>
+  <div class="book-wrap">
+    <div class="book-shadow"></div>
+    <div id="book" class="book">
+      <div class="book-pages-back"></div>
+      <div id="leftFace" class="page-face left-page"></div>
+      <div id="rightFace" class="page-face right-page"></div>
+      <div id="turnLeaf" class="turn-leaf">
+        <div id="leafFront" class="leaf-face leaf-front page-face"></div>
+        <div id="leafBack" class="leaf-face leaf-back page-face"></div>
+      </div>
+      <div class="spine"></div>
+    </div>
+  </div>
+  <div class="reader-ui">
+    <button id="prev" type="button" aria-label="Página anterior">‹</button>
+    <div id="counter">Portada</div>
+    <button id="next" type="button" aria-label="Página siguiente">›</button>
+    <button id="fullscreen" class="fs" type="button" aria-label="Pantalla completa">⛶</button>
+  </div>
+  <div class="tip">
+    <span class="tip-icon">🖱️</span> Haz clic para pasar la página
+    <span class="tip-sep">|</span>
+    <span class="tip-keys"><span class="key">←</span><span class="key">→</span></span>
+    <span class="tip-sep">|</span>
+    o usa las teclas de flecha
+  </div>
+</div>
+
+<script src="illustrations.js"></script>
+<script src="content.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
