@@ -1,60 +1,105 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>El viaje de las estrellas — Libro de cuentos</title>
-<meta name="description" content="El viaje de las estrellas — Escuela Los Lirios">
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#071020">
+  <meta name="description" content="El viaje de las estrellas, un relato sobre las distintas formas de aprender y brillar.">
+  <title>El viaje de las estrellas</title>
+  <link rel="preload" as="image" href="assets/mesa-antigua.png">
+  <style>
+    :root{--night:#050914;--ink:#17213c;--paper:#fbf4df;--gold:#f5c66a;--muted:#c7c1b7;--page-w:min(39vw,520px);--page-h:min(78vh,690px)}
+    *{box-sizing:border-box} html,body{height:100%;margin:0} button{font:inherit}
+    body{overflow:hidden;color:#fff;background:#120b07 url('assets/mesa-antigua.png') center/cover fixed;font-family:Georgia,'Times New Roman',serif}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(circle,#fff 0 1px,transparent 1.7px);background-size:87px 83px;opacity:.22;animation:drift 50s linear infinite}
+    @keyframes drift{to{transform:translate3d(-87px,83px,0)}}
+    .shell{height:100%;display:grid;grid-template-rows:auto 1fr auto;isolation:isolate;opacity:0;visibility:hidden;transform:scale(.78);transition:opacity 1.15s ease,transform 1.45s cubic-bezier(.16,.8,.2,1),visibility 0s 1.4s}
+    body.reading .shell{opacity:1;visibility:visible;transform:scale(1);transition-delay:.15s,.15s,0s}
+    body.reading::after{content:"";position:fixed;inset:0;background:rgba(5,7,13,.38);backdrop-filter:blur(2px);z-index:-1}
+    .intro{position:fixed;inset:0;z-index:200;display:grid;place-items:center;perspective:1800px;background:#120b07 url('assets/portada-cinematografica.png') center/cover no-repeat;transition:opacity .9s ease .85s,visibility 0s 1.8s,transform 1.7s cubic-bezier(.18,.78,.22,1)}
+    body.reading .intro{opacity:0;visibility:hidden;pointer-events:none}
+    .closed-book{position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;color:#f6d58f;cursor:pointer;background:transparent}
+    .closed-book::before,.closed-book::after{display:none}.cover-copy{position:absolute;inset:0}.cover-ornament,.cover-copy h1,.cover-copy small{display:none}.open-label{position:absolute;left:50%;bottom:6.5%;transform:translateX(-50%);white-space:nowrap;padding:15px 27px;border:1px solid rgba(247,207,128,.68);border-radius:99px;background:rgba(21,13,8,.7);box-shadow:0 8px 28px rgba(0,0,0,.35);backdrop-filter:blur(8px);font:700 11px/1 system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#ffe1a3;animation:pulse 2s infinite}
+    body.opening .intro{transform:scale(1.18)}
+    .dust{position:absolute;inset:-15%;pointer-events:none;background-image:radial-gradient(circle,#ffd77c 0 1px,transparent 2px);background-size:73px 67px;opacity:.5;animation:drift 18s linear infinite}
+    header{display:flex;justify-content:space-between;align-items:center;padding:18px clamp(18px,4vw,56px);font:600 11px/1.2 system-ui,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#e7d8b8}
+    .brand{display:flex;align-items:center;gap:10px}.brand i{width:8px;height:8px;background:var(--gold);clip-path:polygon(50% 0,61% 36%,100% 50%,61% 64%,50% 100%,39% 64%,0 50%,39% 36%);filter:drop-shadow(0 0 7px #ffd889)}
+    #counter{font-variant-numeric:tabular-nums;color:#aebbd2}
+    main{display:grid;place-items:center;min-height:0;perspective:2200px;padding:0 20px}
+    .book{position:relative;width:calc(var(--page-w)*2);height:var(--page-h);filter:drop-shadow(0 35px 30px rgba(0,0,0,.62));transform:rotateX(3deg);transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+    .book::before{content:"";position:absolute;inset:-15px -20px -22px;z-index:-5;border-radius:13px 18px 20px 14px;background:linear-gradient(135deg,#10264b,#061329 68%,#020814);border:3px solid #9c6a24;box-shadow:0 8px 0 #4b2e13,0 16px 0 #d1bd94,0 22px 0 #9d855c,0 38px 38px rgba(0,0,0,.56),inset 0 0 0 3px #d0a24d}
+    .book::after{content:"";position:absolute;left:50%;top:1%;bottom:1%;z-index:80;width:2px;background:linear-gradient(90deg,rgba(0,0,0,.2),rgba(255,255,255,.22),rgba(0,0,0,.25));box-shadow:0 0 14px rgba(0,0,0,.4);pointer-events:none}
+    .sheet{position:absolute;right:0;top:0;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transition:transform 1.05s cubic-bezier(.65,.02,.2,1);will-change:transform}
+    .sheet.turned{transform:rotateY(-180deg)}
+    .page{position:absolute;inset:0;overflow:hidden;backface-visibility:hidden;background:linear-gradient(100deg,#efe3c8,#fff8e7 12%,#f8edda 88%,#dfcfad);color:#17213c;border:9px solid #d5c29b;border-radius:0 8px 8px 0;box-shadow:2px 2px 0 #e1d2b3,4px 4px 0 #bca984,7px 8px 10px rgba(0,0,0,.22),inset 0 0 0 1px #b39b70,inset 18px 0 35px rgba(62,43,19,.18),inset -1px 0 rgba(0,0,0,.12)}
+    .page.back{transform:rotateY(180deg);border-radius:8px 0 0 8px;box-shadow:-2px 2px 0 #e1d2b3,-4px 4px 0 #bca984,-7px 8px 10px rgba(0,0,0,.22),inset 0 0 0 1px #b39b70,inset -18px 0 35px rgba(62,43,19,.18),inset 1px 0 rgba(0,0,0,.12)}
+    .page-inner{height:100%;display:flex;flex-direction:column;justify-content:center;padding:clamp(32px,5vw,68px)}
+    .text-illustrated{position:relative;height:100%;isolation:isolate}.text-illustrated::before{content:"";position:absolute;inset:0;z-index:-2;background:var(--page-bg) center/cover no-repeat;opacity:.19;filter:saturate(.72) contrast(.9)}.text-illustrated::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(255,248,231,.96) 8%,rgba(255,248,231,.82) 54%,rgba(239,226,199,.68) 100%)}.back .text-illustrated::after{background:linear-gradient(270deg,rgba(255,248,231,.96) 8%,rgba(255,248,231,.82) 54%,rgba(239,226,199,.68) 100%)}.text-illustrated .page-inner{position:relative}.text-illustrated h2,.text-illustrated p,.text-illustrated .kicker{text-shadow:0 1px 0 rgba(255,255,255,.8)}
+    .kicker{font:700 10px/1.3 system-ui,sans-serif;letter-spacing:.23em;text-transform:uppercase;color:#a87624;margin-bottom:20px}
+    h1,h2,p{margin:0} h1{font-size:clamp(39px,5vw,70px);line-height:.92;letter-spacing:-.055em;color:#fff;text-wrap:balance;text-shadow:0 4px 28px rgba(0,0,0,.65)}
+    h2{font-size:clamp(29px,3.1vw,48px);line-height:1.02;letter-spacing:-.035em;margin-bottom:24px;text-wrap:balance;color:#15264b}
+    p{font-size:clamp(17px,1.55vw,23px);line-height:1.58;text-wrap:pretty}.quote{font-style:italic;font-size:clamp(20px,2vw,29px);line-height:1.45}.page-no{position:absolute;bottom:22px;right:28px;font:600 10px/1 system-ui,sans-serif;color:#c6a96e;letter-spacing:.14em}.back .page-no{right:auto;left:28px}
+    .image-page{background:#0b1427;color:#fff}.image-page .page-inner{position:relative;z-index:2;justify-content:flex-end;padding:clamp(32px,5vw,62px);background:linear-gradient(0deg,rgba(3,7,15,.88),transparent 62%)}
+    .image-page img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.image-page h2{max-width:9ch;text-shadow:0 3px 20px #000}.image-page .kicker{color:#f4d38d}
+    .cover .page-inner{align-items:center;text-align:center;justify-content:center;background:linear-gradient(0deg,rgba(1,5,13,.72),rgba(5,12,29,.08) 70%)}.cover h1{max-width:8ch}.cover .subtitle{margin-top:24px;max-width:31ch;color:#f3e7cf;font:500 clamp(14px,1.25vw,18px)/1.5 system-ui,sans-serif}.cover .prompt{position:absolute;bottom:28px;font:600 10px/1 system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#f5d89a;animation:pulse 2s ease-in-out infinite}
+    @keyframes pulse{50%{opacity:.45;transform:translateX(4px)}}
+    .constellation{background:linear-gradient(150deg,#101c3d,#060b18);color:#fff}.constellation .page-inner{align-items:center;text-align:center}.stars{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin:16px auto 28px}.stars span{font-size:clamp(17px,2vw,25px);color:var(--gold);filter:drop-shadow(0 0 8px #f2b74f);animation:twinkle 3s ease-in-out infinite}.stars span:nth-child(3n){animation-delay:-1.2s}.stars span:nth-child(4n){animation-delay:-2.1s}@keyframes twinkle{50%{opacity:.4;transform:scale(.78)}}
+    footer{display:flex;align-items:center;justify-content:center;gap:18px;padding:14px 20px 20px}.nav{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(10,19,38,.66);color:#f6d58f;cursor:pointer;transition:.25s}.nav:hover:not(:disabled){background:#f2c665;color:#111a2c;transform:scale(1.06)}.nav:disabled{opacity:.22;cursor:default}.progress{width:min(260px,42vw);height:2px;background:rgba(255,255,255,.14);overflow:hidden}.progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,#b48235,#ffe0a0);transition:width .8s}
+    .hint{position:fixed;right:18px;bottom:17px;font:500 10px/1.4 system-ui,sans-serif;color:#8290a9;letter-spacing:.08em}
+    @media (max-width:760px){:root{--page-w:min(88vw,500px);--page-h:min(74vh,680px)}header{padding:14px 18px}.book{width:var(--page-w)}.book::after{display:none}.sheet{width:100%}.page{border-radius:8px}.page.back{border-radius:8px}.page-inner{padding:36px 32px}.hint{display:none}.book.open{transform:translateX(0)}.intro{background-position:center}.open-label{bottom:5%}}
+    @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important}}
+  </style>
 </head>
 <body>
-
-<div id="intro" class="intro">
-  <div class="scene-image"></div>
-  <div class="scene-vignette"></div>
-  <div class="magic-dust"></div>
-  <div class="intro-cover">
-    <div class="intro-star">★</div>
-    <h1 class="intro-title">El viaje<br>de las estrellas</h1>
-    <p class="intro-subtitle">Una narración para celebrar nuestras voces, aprendizajes y caminos</p>
-    <div class="intro-school">Escuela Los Lirios</div>
-    <button id="start" class="start" type="button">Abrir el libro</button>
-  </div>
-</div>
-
-<div id="reader" class="reader" aria-hidden="true">
-  <div class="reader-bg"></div>
-  <div class="reader-light"></div>
-  <div class="book-wrap">
-    <div class="book-shadow"></div>
-    <div id="book" class="book">
-      <div class="book-pages-back"></div>
-      <div id="leftFace" class="page-face left-page"></div>
-      <div id="rightFace" class="page-face right-page"></div>
-      <div id="turnLeaf" class="turn-leaf">
-        <div id="leafFront" class="leaf-face leaf-front page-face"></div>
-        <div id="leafBack" class="leaf-face leaf-back page-face"></div>
-      </div>
-      <div class="spine"></div>
-    </div>
-  </div>
-  <div class="reader-ui">
-    <button id="prev" type="button" aria-label="Página anterior">‹</button>
-    <div id="counter">Portada</div>
-    <button id="next" type="button" aria-label="Página siguiente">›</button>
-    <button id="fullscreen" class="fs" type="button" aria-label="Pantalla completa">⛶</button>
-  </div>
-  <div class="tip">
-    <span class="tip-icon">🖱️</span> Haz clic para pasar la página
-    <span class="tip-sep">|</span>
-    <span class="tip-keys"><span class="key">←</span><span class="key">→</span></span>
-    <span class="tip-sep">|</span>
-    o usa las teclas de flecha
-  </div>
-</div>
-
-<script src="illustrations.js"></script>
-<script src="content.js"></script>
-<script src="script.js"></script>
+  <section class="intro" aria-label="Portada">
+    <div class="dust"></div>
+    <button class="closed-book" id="openBook" aria-label="Abrir el libro">
+      <span class="cover-copy"><span class="cover-ornament">✦</span><h1>El viaje de las estrellas</h1><small>Escuela Los Lirios</small><span class="open-label">Abrir el libro</span></span>
+    </button>
+  </section>
+  <div class="shell">
+    <header><div class="brand"><i></i> Escuela Los Lirios</div><div id="counter">01 / 15</div></header>
+    <main><div class="book" id="book" aria-live="polite"></div></main>
+    <footer><button class="nav" id="prev" aria-label="Página anterior">←</button><div class="progress" aria-hidden="true"><span id="bar"></span></div><button class="nav" id="next" aria-label="Página siguiente">→</button></footer>
+  </div><div class="hint">Usa ← → o desliza</div>
+  <script>
+  const pages=[
+    {type:'blank',title:'',text:''},
+    {type:'constellation',kicker:'El viaje de las estrellas',title:'Una escuela, muchas historias',text:'Una historia para celebrar nuestras voces, aprendizajes y caminos.'},
+    {kicker:'I · Una escuela, muchas historias',title:'El cielo de Los Lirios',text:'En una escuela llamada Los Lirios había una ventana muy especial. Desde allí se podía mirar el cielo. Por las mañanas entraba la luz del sol. Por las tardes pasaban las nubes. Y cuando llegaba la noche, aparecían las estrellas.'},
+    {type:'image',image:'assets/ventana.png',kicker:'La ventana',title:'Una pequeña estrella'},
+    {title:'Algo diferente',text:'Una tarde apareció una estrella diferente. Era pequeña, casi parecía perderse entre las demás. Pero tenía algo especial: brillaba con mucha fuerza. Los estudiantes la observaron en silencio y comenzaron a hacerse preguntas.'},
+    {kicker:'Una pregunta',title:'¿Por qué algunas estrellas parecen brillar más?',text:'La profesora sonrió y respondió: «Quizás no se trata de quién brilla más. Quizás se trata de descubrir cómo brilla cada uno».'},
+    {title:'Cada uno tiene su luz',text:'Entonces comprendieron que no había dos estrellas iguales. Algunas eran grandes y otras pequeñas. Algunas estaban cerca y otras muy lejos. Cada una tenía su lugar y su propia luz. Con las personas sucede algo parecido.'},
+    {kicker:'II · Aprender',title:'Diferentes caminos',text:'Algunos aprenden escuchando. Otros mirando, leyendo, dibujando, cantando, jugando o experimentando. Hay quienes necesitan más tiempo. Y también quienes necesitan que alguien los acompañe.'},
+    {title:'Cuando algo cuesta',text:'«¿Y qué pasa cuando uno intenta y no puede?», preguntó un estudiante. La profesora respondió: «No significa que no puedas. Tal vez necesitas otro camino, más tiempo o ayuda».'},
+    {title:'Puedes seguir',text:'El estudiante volvió a mirar la ventana. La pequeña estrella seguía allí. Parecía más brillante que antes. Y por un instante todos imaginaron que la estrella decía: «Puedes seguir».'},
+    {kicker:'III · El viaje',title:'Descubrir la propia luz',text:'Al día siguiente llegaron con una idea: querían descubrir cuál era su propia luz. No necesitaron barcos ni aviones. Era un viaje diferente, un viaje para descubrirse a sí mismos.'},
+    {type:'image',image:'assets/taller.png',kicker:'Las estrellas',title:'Algo para compartir'},
+    {title:'Una estrella para cada voz',text:'Cada estudiante recibió una pequeña estrella. En ella debía expresar algo que pudiera aportar a los demás: una habilidad, una palabra, una sonrisa, una ayuda, un sueño o una fortaleza.'},
+    {type:'constellation',kicker:'Cuatro luces',title:'Esfuerzo · Amistad · Valentía · Aprender',text:'Cada intento deja una enseñanza. Caminar acompañado aligera los caminos difíciles. Ser valiente es atreverse aunque exista miedo. Aprender también es descubrir que podemos hacer cosas que antes parecían imposibles.'},
+    {kicker:'IV · Caminar juntos',title:'No todos al mismo ritmo',text:'Durante el viaje descubrieron algo importante: algunos avanzaban rápido y otros se detenían. Algunos necesitaban más tiempo. Pero caminar juntos no significa caminar igual.'},
+    {title:'Nadie queda atrás',text:'Caminar juntos significa esperar, acompañar, escuchar y ayudar. Significa que cuando un compañero necesita apoyo, podemos acercarnos y decir: «Estoy contigo».'},
+    {title:'Celebrar los logros',text:'Cuando alguien lograba algo por primera vez, todos podían celebrar. Porque el logro de una persona también puede convertirse en una alegría para todos. Una pequeña victoria puede iluminar un cielo entero.'},
+    {title:'Equivocarse también es aprender',text:'A veces nos equivocamos, olvidamos o tenemos que comenzar nuevamente. Un error no es el final del camino. Puede ser una oportunidad para aprender.'},
+    {kicker:'V · Nuestro cielo',title:'Las 25 estrellas',text:'Al regresar a la escuela, pusieron todas sus estrellas juntas. Ninguna era igual a otra, pero todas eran importantes. Juntas formaban un cielo mucho más grande.'},
+    {title:'El mensaje',text:'La profesora miró a sus estudiantes y dijo: «No tenemos que brillar como los demás. Tenemos que descubrir nuestra propia luz». Entonces entendieron que ser diferente no significa valer menos.'},
+    {title:'Cada persona cuenta',text:'Cada persona tiene un camino y su propio tiempo. Cada persona tiene algo que aprender y algo que compartir. Cuando dejamos espacio para que todos brillen, nuestro cielo se hace más grande.'},
+    {kicker:'Una estrella puede ser…',title:'Un pequeño paso',text:'Una palabra. Una sonrisa. Un dibujo. Una canción. Pedir ayuda o ayudar a un amigo. Atreverse a participar. Leer una palabra. Aprender algo nuevo. Volver a intentarlo.'},
+    {title:'Hoy compartimos nuestras voces',text:'No venimos a demostrar quién lee mejor. Venimos a compartir nuestros aprendizajes y nuestros sueños. Venimos a celebrar nuestros avances.'},
+    {title:'Cada pequeño paso cuenta',text:'Cada palabra cuenta. Cada esfuerzo cuenta. Cada estudiante cuenta. Cada historia cuenta. Y cada estrella tiene un lugar en el cielo.'},
+    {kicker:'VI · La luz que brilla',title:'No tenemos que ser iguales',text:'No tenemos que aprender igual ni avanzar al mismo ritmo. Solo necesitamos la oportunidad de aprender, crecer, intentarlo y descubrir nuestra propia luz.'},
+    {type:'image',image:'assets/final.png',kicker:'Juntos',title:'Todo el cielo se llena de luz'},
+    {type:'constellation',kicker:'Estas son nuestras estrellas',title:'Todos tenemos una luz',text:'Cuando una estrella brilla, ilumina una parte del cielo. Pero cuando muchas estrellas brillan juntas, todo el cielo se llena de luz.'},
+    {type:'cover',image:'assets/portada.png',title:'Gracias por acompañarnos',text:'Y juntos hacemos brillar nuestro cielo.'}
+  ];
+  const book=document.querySelector('#book'); const total=Math.ceil(pages.length/2); let current=0;
+  function markup(p,n,side){if(!p)return '<div class="page-inner"></div>';const bgImages=['assets/ventana.png','assets/taller.png','assets/final.png','assets/portada.png'];const isText=!['cover','image','constellation'].includes(p.type);const cls=p.type==='cover'?'image-page cover':p.type==='image'?'image-page':p.type==='constellation'?'constellation':isText?'text-illustrated':'';const style=isText?` style="--page-bg:url('${bgImages[(n-1)%bgImages.length]}')"`:'';const img=p.image?`<img src="${p.image}" alt="" draggable="false">`:'';const stars=p.type==='constellation'?`<div class="stars">${'<span>✦</span>'.repeat(25)}</div>`:'';return `<div class="${cls} page-content"${style}>${img}<div class="page-inner">${p.kicker?`<div class="kicker">${p.kicker}</div>`:''}${stars}<${p.type==='cover'?'h1':'h2'}>${p.title||''}</${p.type==='cover'?'h1':'h2'}>${p.text?`<p class="${p.text.includes('«')?'quote':''} subtitle">${p.text}</p>`:''}${p.type==='cover'&&n===1?'<div class="prompt">Abrir el libro →</div>':''}</div><div class="page-no">${String(n).padStart(2,'0')}</div></div>`}
+  for(let i=0;i<total;i++){const s=document.createElement('section');s.className='sheet';s.style.zIndex=total-i;s.innerHTML=`<article class="page front">${markup(pages[i*2],i*2+1,'front')}</article><article class="page back">${markup(pages[i*2+1],i*2+2,'back')}</article>`;book.append(s)}
+  const sheets=[...document.querySelectorAll('.sheet')];
+  function render(){sheets.forEach((s,i)=>{const turned=i<current;s.classList.toggle('turned',turned);s.style.zIndex=turned?i+1:total-i});const storyTotal=pages.length-1;const display=current===0?1:Math.min(current*2-1,storyTotal);document.querySelector('#counter').textContent=`${String(display).padStart(2,'0')} / ${String(storyTotal).padStart(2,'0')}`;document.querySelector('#bar').style.width=`${Math.max(0,current-1)/(total-1)*100}%`;prev.disabled=current<=1;next.disabled=current===total;book.classList.toggle('open',current>0&&current<total)}
+  function turn(d){const first=document.body.classList.contains('reading')?1:0;const target=Math.max(first,Math.min(total,current+d));if(target!==current){current=target;render()}}
+  const prev=document.querySelector('#prev'),next=document.querySelector('#next');prev.onclick=()=>turn(-1);next.onclick=()=>turn(1);book.addEventListener('click',e=>turn(e.clientX<innerWidth/2?-1:1));addEventListener('keydown',e=>{if(!document.body.classList.contains('reading'))return;if(['ArrowRight',' ','PageDown'].includes(e.key))turn(1);if(['ArrowLeft','PageUp'].includes(e.key))turn(-1)});let x=0;book.addEventListener('touchstart',e=>x=e.touches[0].clientX,{passive:true});book.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-x;if(Math.abs(d)>45)turn(d<0?1:-1)},{passive:true});document.querySelector('#openBook').addEventListener('click',()=>{document.body.classList.add('opening');setTimeout(()=>{current=1;render();document.body.classList.add('reading')},950)});render();
+  </script>
 </body>
 </html>
