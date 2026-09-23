@@ -19,6 +19,9 @@ La experiencia comienza con un libro de cuero azul cerrado sobre una mesa antigu
 - Flechas izquierda y derecha del teclado.
 - Clic en la mitad izquierda o derecha del libro.
 - Deslizamiento horizontal en pantallas táctiles.
+- Botón **Pantalla completa** para ampliar la experiencia.
+- Botón **Salir de pantalla completa** o tecla `Esc` para volver a la ventana normal.
+- Botón **Reiniciar** para regresar a la portada.
 
 ## Archivos
 
